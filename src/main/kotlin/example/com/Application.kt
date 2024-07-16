@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.Database
 
 fun main(args: Array<String>) {
     Database.connect(
-        "jdbc:postgresql://languagepg-klodmit.amvera.io:5432/languageapp", driver = "org.postgresql.Driver",
+        "jdbc:postgresql://amvera-klodmit-cnpg-languagebase-rw", driver = "org.postgresql.Driver",
         user = "klodmit", password = "228972Gfg"
     )
 
