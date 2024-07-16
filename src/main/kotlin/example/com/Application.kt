@@ -7,15 +7,16 @@ import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.Database
 
 fun main(args: Array<String>) {
-    Database.connect(
-        "jdbc:postgresql://amvera-klodmit-cnpg-languagebase-rw", driver = "org.postgresql.Driver",
-        user = "klodmit", password = "228972"
-    )
+
 
     io.ktor.server.netty.EngineMain.main(args)
 }
 
 fun Application.module() {
+    Database.connect(
+        "jdbc:postgresql://amvera-klodmit-cnpg-languagebase-rw", driver = "org.postgresql.Driver",
+        user = "klodmit", password = "228972"
+    )
     configureRegisterRouting()
     configureLoginRouting()
     configureSerialization()
