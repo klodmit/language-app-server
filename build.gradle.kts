@@ -1,3 +1,5 @@
+import org.gradle.jvm.tasks.Jar
+
 val kotlin_version = "1.9.0"
 val logback_version = "1.2.11"
 val postgres_version = "42.3.1"
@@ -38,4 +40,12 @@ dependencies {
     implementation("io.ktor:ktor-server-config-yaml:2.3.2")
     testImplementation("io.ktor:ktor-server-tests-jvm:2.3.2")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "io.ktor.server.netty.EngineMain"
+    }
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
