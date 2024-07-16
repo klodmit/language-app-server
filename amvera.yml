@@ -8,6 +8,6 @@ build:
   artifacts:
     build/libs/*.jar: /
 run:
-  jarName: main.jar
+  jarName: ru.klodmit.language-app-0.0.1.jar
   persistenceMount: /data
-  containerPort: 80
+  containerPort: 5000
