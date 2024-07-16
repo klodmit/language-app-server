@@ -14,7 +14,7 @@ group = "example.com"
 version = "0.0.1"
 
 application {
-    mainClass.set("io.ktor.server.netty.EngineMain")
+    mainClass.set("io.ktor.server.netty.EngineMainKt")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -46,7 +46,7 @@ dependencies {
 tasks.jar {
     manifest {
         attributes(
-            "Main-Class" to "io.ktor.server.netty.EngineMain"
+            "Main-Class" to "io.ktor.server.netty.EngineMainKt"
         )
     }
 }
