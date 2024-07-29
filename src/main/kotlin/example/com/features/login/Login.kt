@@ -12,9 +12,5 @@ data class LoginReceiveRemote(
 data class LoginResponseRemote(
     val login: String,
     val password: String,
-    val firstname: String,
-    val lastname: String,
-    val email: String,
-    val points: Int,
     val token: String
 )

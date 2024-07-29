@@ -1,5 +1,6 @@
 package example.com.features.login
 
+import decodePass
 import example.com.cache.InMemoryCache
 import example.com.cache.TokenCache
 import example.com.database.tokens.TokensDTO
@@ -12,6 +13,7 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
+import mysalt
 import java.util.*
 
 class LoginController(private val call: ApplicationCall) {
@@ -22,7 +24,9 @@ class LoginController(private val call: ApplicationCall) {
         if (userDTO == null) {
             call.respond(HttpStatusCode.BadRequest, "User not found")
         } else {
-            if (userDTO.password == recieve.password) {
+            val pass = userDTO.password
+            val decodedPass = userDTO.password.decodePass(mysalt,pass)
+            if (decodedPass == recieve.password) {
                 val token = UUID.randomUUID().toString()
                 Tokens.insert(
                     TokensDTO(
@@ -32,11 +36,7 @@ class LoginController(private val call: ApplicationCall) {
                 )
                 call.respond(LoginResponseRemote(
                     login = recieve.login,
-                    password = recieve.password,
-                    firstname = userDTO.firstname,
-                    lastname = userDTO.lastname,
-                    email = userDTO.email,
-                    points = userDTO.points,
+                    password = userDTO.password,
                     token = token
                 ))
             } else {

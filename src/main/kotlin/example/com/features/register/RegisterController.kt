@@ -1,8 +1,9 @@
 package example.com.features.register
 
-import example.com.cache.InMemoryCache
-import example.com.cache.TokenCache
+import encodePass
 import example.com.database.tokens.TokensDTO
+import example.com.database.userinfo.UserInfo
+import example.com.database.userinfo.UserInfoDTO
 import example.com.database.users.Tokens
 import example.com.database.users.UserDTO
 import example.com.database.users.Users
@@ -11,6 +12,7 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
+import mysalt
 import java.util.*
 
 class RegisterController(private val call: ApplicationCall) {
@@ -28,11 +30,15 @@ class RegisterController(private val call: ApplicationCall) {
             call.respond(HttpStatusCode.BadRequest, message = "User already exists")
         } else {
             val token = UUID.randomUUID().toString()
-
             Users.insert(
                 UserDTO(
                     login = registerReceiveRemote.login,
-                    password = registerReceiveRemote.password,
+                    password = registerReceiveRemote.password.encodePass(mysalt),
+                )
+            )
+            UserInfo.insert(
+                UserInfoDTO(
+                    login = registerReceiveRemote.login,
                     firstname = registerReceiveRemote.firstname,
                     lastname = registerReceiveRemote.lastname,
                     email = registerReceiveRemote.email,
