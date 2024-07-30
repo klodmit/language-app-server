@@ -25,7 +25,7 @@ class LoginController(private val call: ApplicationCall) {
             call.respond(HttpStatusCode.BadRequest, "User not found")
         } else {
             val pass = userDTO.password
-            val decodedPass = userDTO.password.decodePass(mysalt,pass)
+            val decodedPass = userDTO.password.decodePass(recieve.password, mysalt, pass)
             if (decodedPass == recieve.password) {
                 val token = UUID.randomUUID().toString()
                 Tokens.insert(
@@ -34,11 +34,13 @@ class LoginController(private val call: ApplicationCall) {
                         token = token
                     )
                 )
-                call.respond(LoginResponseRemote(
-                    login = recieve.login,
-                    password = userDTO.password,
-                    token = token
-                ))
+                call.respond(
+                    LoginResponseRemote(
+                        login = recieve.login,
+                        password = userDTO.password,
+                        token = token
+                    )
+                )
             } else {
                 call.respond(HttpStatusCode.BadRequest, "Invalid password")
             }

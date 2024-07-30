@@ -26,8 +26,8 @@ fun String.encodePass(salt: String): String {
     return Base64.getEncoder().encodeToString(combined)
 }
 
-fun String.decodePass(salt: String, encodedValue: String): String {
-    val secretKeySpec = "123".toAESKey(salt.toByteArray())
+fun String.decodePass(password: String, salt: String, encodedValue: String): String {
+    val secretKeySpec = password.toAESKey(salt.toByteArray())
 
     val combined = Base64.getDecoder().decode(encodedValue)
     val iv = combined.sliceArray(0..11) // Извлечь IV из объединенных данных
