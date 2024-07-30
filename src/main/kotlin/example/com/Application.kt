@@ -16,7 +16,7 @@ fun main(args: Array<String>) {
 fun Application.module() {
     Database.connect(
         "jdbc:postgresql://amvera-klodmit-cnpg-languagebase-rw/languageapp", driver = "org.postgresql.Driver",
-        user = "postgres", password = "228972"
+        user = "klodmit", password = "228972"
     )
     configureRegisterRouting()
     configureLoginRouting()
