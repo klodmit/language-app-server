@@ -18,10 +18,10 @@ fun String.encodePass(salt: String): String {
     val cipher = Cipher.getInstance("AES/GCM/NoPadding")
     cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec)
 
-    val iv = cipher.iv // Получить IV из шифра после инициализации
+    val iv = cipher.iv
 
     val encryptedValue = cipher.doFinal(this.toByteArray())
-    val combined = iv + encryptedValue // Объединить IV и зашифрованный текст
+    val combined = iv + encryptedValue
 
     return Base64.getEncoder().encodeToString(combined)
 }
@@ -30,8 +30,8 @@ fun String.decodePass(password: String, salt: String, encodedValue: String): Str
     val secretKeySpec = password.toAESKey(salt.toByteArray())
 
     val combined = Base64.getDecoder().decode(encodedValue)
-    val iv = combined.sliceArray(0..11) // Извлечь IV из объединенных данных
-    val ciphertext = combined.sliceArray(12 until combined.size) // Извлечь зашифрованный текст из объединенных данных
+    val iv = combined.sliceArray(0..11)
+    val ciphertext = combined.sliceArray(12 until combined.size)
 
     val cipher = Cipher.getInstance("AES/GCM/NoPadding")
     val gcmSpec = GCMParameterSpec(128, iv)
