@@ -1,8 +1,10 @@
 package example.com.database.users
 
 import example.com.database.tokens.TokensDTO
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
 
@@ -19,6 +21,20 @@ object Tokens : Table("tokens") {
                 it[token] = tokensDTO.token
 
             }
+        }
+    }
+    fun fetchToken(token: String):TokensDTO?{
+        return try {
+            transaction {
+                val tokenInfo = Tokens.select { Tokens.token.eq(token) }.single()
+                TokensDTO(
+                    login = tokenInfo[Tokens.login],
+                    rowid = tokenInfo[Tokens.id],
+                    token = tokenInfo[Tokens.token]
+                )
+            }
+        }catch (e: Exception){
+            null
         }
     }
 

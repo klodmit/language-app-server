@@ -2,6 +2,7 @@ package example.com
 
 import example.com.features.login.configureLoginRouting
 import example.com.features.register.configureRegisterRouting
+import example.com.features.userinfo.configureTokenRouting
 import example.com.features.userinfo.configureUserInfoRouting
 import example.com.plugins.*
 import io.ktor.server.application.*
@@ -25,4 +26,5 @@ fun Application.module() {
     configureSerialization()
     configureRouting()
     configureUserInfoRouting()
+    configureTokenRouting()
 }
