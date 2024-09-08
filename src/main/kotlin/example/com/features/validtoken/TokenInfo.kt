@@ -9,7 +9,5 @@ data class TokenInfo(
 
 @Serializable
 data class TokenInfoResponse(
-    val id: String,
     val login: String,
-    val token: String,
 )

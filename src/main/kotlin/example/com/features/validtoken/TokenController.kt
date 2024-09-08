@@ -13,9 +13,7 @@ class TokenController(private val call: ApplicationCall) {
         if (tokensDTO != null) {
             call.respond(
                 TokenInfoResponse(
-                    login = tokensDTO.login,
-                    token = receive.token,
-                    id = tokensDTO.rowid
+                    login = tokensDTO.login
                 )
             )
         }
