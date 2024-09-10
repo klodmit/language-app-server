@@ -51,16 +51,18 @@ object UserInfo : Table("userinfo") {
             UserInfo
                 .slice(UserInfo.login, UserInfo.points)
                 .selectAll()
-                .orderBy(UserInfo.points, SortOrder.DESC)
+                .orderBy(UserInfo.points, SortOrder.DESC )
+                .orderBy(UserInfo.login, SortOrder.ASC)
                 .limit(3)
                 .map {
                     UserUpdateScoreRemote(
-                        login = it[login],
-                        points = it[points]
+                        login = it[UserInfo.login],
+                        points = it[UserInfo.points]
                     )
                 }
         }
     }
+
 
 
 
