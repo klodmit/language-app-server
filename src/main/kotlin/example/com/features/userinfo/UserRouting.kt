@@ -10,5 +10,13 @@ fun Application.configureUserInfoRouting() {
             val userInfoController = UserInfoController(call)
             userInfoController.getUserInfo()
         }
+        post("/updateUserInfo") {
+            val userInfoController = UserInfoController(call)
+            userInfoController.updateUserInfo()
+        }
+        post("/updateUserScore") {
+            val userInfoController = UserInfoController(call)
+            userInfoController.updateUserScore()
+        }
     }
 }

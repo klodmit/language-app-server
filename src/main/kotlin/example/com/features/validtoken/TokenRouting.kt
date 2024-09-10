@@ -8,8 +8,8 @@ import io.ktor.server.routing.*
 fun Application.configureTokenRouting() {
     routing {
         post("/validtoken") {
-            val TokenController = TokenController(call)
-            TokenController.validateToken()
+            val tokenController = TokenController(call)
+            tokenController.validateToken()
         }
     }
 }

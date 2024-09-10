@@ -3,14 +3,13 @@ package example.com
 import example.com.features.login.configureLoginRouting
 import example.com.features.register.configureRegisterRouting
 import example.com.features.userinfo.configureTokenRouting
+import example.com.features.userinfo.configureTopRouting
 import example.com.features.userinfo.configureUserInfoRouting
 import example.com.plugins.*
 import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.Database
 
 fun main(args: Array<String>) {
-
-
     io.ktor.server.netty.EngineMain.main(args)
 }
 
@@ -27,4 +26,5 @@ fun Application.module() {
     configureRouting()
     configureUserInfoRouting()
     configureTokenRouting()
+    configureTopRouting()
 }

@@ -8,6 +8,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 
 object UserInfo : Table("userinfo") {
     private val login = UserInfo.varchar("login", 25)
@@ -24,6 +25,25 @@ object UserInfo : Table("userinfo") {
                 it[lastname] = userInfoDTO.lastname
                 it[email] = userInfoDTO.email
                 it[points] = userInfoDTO.points
+            }
+        }
+    }
+
+    fun update(userInfoDTO: UserInfoDTO){
+        transaction {
+            UserInfo.update({UserInfo.login eq userInfoDTO.login}){
+                it[firstname] = userInfoDTO.firstname
+                it[lastname] = userInfoDTO.lastname
+                it[email] = userInfoDTO.email
+                it[points] = userInfoDTO.points
+            }
+        }
+    }
+
+    fun updateScore(userLogin: String, newPoints: Int){
+        return transaction {
+            UserInfo.update({ UserInfo.login eq userLogin }) {
+                it[points] = newPoints
             }
         }
     }

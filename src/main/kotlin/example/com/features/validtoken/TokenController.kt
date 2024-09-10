@@ -1,6 +1,5 @@
 package example.com.features.validtoken
 
-import example.com.database.tokens.TokensDTO
 import example.com.database.users.Tokens
 import io.ktor.server.application.*
 import io.ktor.server.request.*
