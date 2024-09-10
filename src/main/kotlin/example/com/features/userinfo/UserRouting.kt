@@ -1,7 +1,9 @@
 package example.com.features.userinfo
 
 
+import example.com.database.userinfo.UserInfo
 import io.ktor.server.application.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Application.configureUserInfoRouting() {
@@ -18,5 +20,10 @@ fun Application.configureUserInfoRouting() {
             val userInfoController = UserInfoController(call)
             userInfoController.updateUserScore()
         }
+        get("/getTopThreeUsers") {
+            val topUsers = UserInfo.getTopThreeUsers()
+            call.respond(topUsers) // Возвращаем результат
+        }
+
     }
 }

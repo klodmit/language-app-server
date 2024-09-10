@@ -3,12 +3,10 @@ package example.com.database.userinfo
 
 import example.com.database.users.UserDTO
 import example.com.database.users.Users
+import example.com.features.userinfo.UserUpdateScoreRemote
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.update
 
 object UserInfo : Table("userinfo") {
     private val login = UserInfo.varchar("login", 25)
@@ -47,6 +45,24 @@ object UserInfo : Table("userinfo") {
             }
         }
     }
+
+    fun getTopThreeUsers(): List<UserUpdateScoreRemote> {
+        return transaction {
+            UserInfo
+                .slice(UserInfo.login, UserInfo.points)
+                .selectAll()
+                .orderBy(UserInfo.points, SortOrder.DESC)
+                .limit(3)
+                .map {
+                    UserUpdateScoreRemote(
+                        login = it[login],
+                        points = it[points]
+                    )
+                }
+        }
+    }
+
+
 
     fun fetchUser(login: String): UserInfoDTO? {
         return try {

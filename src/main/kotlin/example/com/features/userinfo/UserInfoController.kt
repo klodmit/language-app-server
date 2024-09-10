@@ -2,6 +2,7 @@ package example.com.features.userinfo
 
 import example.com.database.tokens.TokensDTO
 import example.com.database.userinfo.UserInfo
+import example.com.database.userinfo.UserInfo.getTopThreeUsers
 import example.com.database.userinfo.UserInfoDTO
 import io.ktor.http.*
 import io.ktor.server.application.*
