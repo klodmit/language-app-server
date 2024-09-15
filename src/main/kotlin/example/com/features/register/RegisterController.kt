@@ -19,14 +19,11 @@ class RegisterController(private val call: ApplicationCall) {
 
     suspend fun registerNewUser() {
         val registerReceiveRemote = call.receive<RegisterReceiveRemote>()
+        val userDTO = Users.fetchUser(registerReceiveRemote.login)
 
         if (!registerReceiveRemote.email.isValidEmail()) {
             call.respond(HttpStatusCode.BadRequest, message = "Email is not valid")
-        }
-
-        val userDTO = Users.fetchUser(registerReceiveRemote.login)
-
-        if (userDTO != null) {
+        } else if (userDTO != null) {
             call.respond(HttpStatusCode.BadRequest, message = "User already exists")
         } else {
             val token = UUID.randomUUID().toString()
@@ -54,7 +51,5 @@ class RegisterController(private val call: ApplicationCall) {
             )
             call.respond(RegisterResponseRemote(token = token))
         }
-
-
     }
 }
