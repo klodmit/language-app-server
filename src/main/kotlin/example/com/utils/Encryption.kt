@@ -1,9 +1,12 @@
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
+package example.com.utils
+
 import java.security.MessageDigest
-import java.util.Base64
+import java.util.*
+import javax.crypto.Cipher
 import javax.crypto.spec.GCMParameterSpec
-val mysalt = "frhajdlfuje945314]afsdhu"
+import javax.crypto.spec.SecretKeySpec
+
+val mySalt = DotEnvCfg.getEnv("SALT")
 
 fun String.toAESKey(salt: ByteArray): SecretKeySpec {
     val md = MessageDigest.getInstance("SHA-256")
@@ -26,7 +29,7 @@ fun String.encodePass(salt: String): String {
     return Base64.getEncoder().encodeToString(combined)
 }
 
-fun String.decodePass(password: String, salt: String, encodedValue: String): String {
+fun decodePass(password: String, salt: String, encodedValue: String): String {
     val secretKeySpec = password.toAESKey(salt.toByteArray())
 
     val combined = Base64.getDecoder().decode(encodedValue)

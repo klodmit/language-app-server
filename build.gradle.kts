@@ -1,9 +1,9 @@
 import org.gradle.jvm.tasks.Jar
 
 val kotlin_version = "1.9.0"
-val logback_version = "1.2.11"
-val postgres_version = "42.3.1"
-val h2_version = "2.1.214"
+val logback_version = "1.4.12"
+val postgres_version = "42.7.2"
+val h2_version = "2.2.220"
 val exposed_version = "0.38.2"
 
 plugins {
@@ -26,6 +26,7 @@ repositories {
 }
 
 dependencies {
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.0")
     implementation("io.ktor:ktor-server-core-jvm:2.3.2")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:2.3.2")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:2.3.2")
@@ -49,3 +50,9 @@ tasks.withType<Jar> {
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+tasks.jar {
+    archiveBaseName.set("language-server")
+    archiveVersion.set("")
+    archiveClassifier.set("")
+}
+

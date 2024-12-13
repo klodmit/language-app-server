@@ -1,6 +1,6 @@
 package example.com.features.register
 
-import encodePass
+import example.com.utils.encodePass
 import example.com.database.tokens.TokensDTO
 import example.com.database.userinfo.UserInfo
 import example.com.database.userinfo.UserInfoDTO
@@ -12,7 +12,7 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
-import mysalt
+import example.com.utils.mySalt
 import java.util.*
 
 class RegisterController(private val call: ApplicationCall) {
@@ -30,7 +30,7 @@ class RegisterController(private val call: ApplicationCall) {
             Users.insert(
                 UserDTO(
                     login = registerReceiveRemote.login,
-                    password = registerReceiveRemote.password.encodePass(mysalt),
+                    password = registerReceiveRemote.password.encodePass(mySalt),
                 )
             )
             UserInfo.insert(

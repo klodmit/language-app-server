@@ -1,0 +1,7 @@
+ktor:
+  application:
+    modules:
+      - example.com.ApplicationKt.module
+  deployment:
+    port: 5000
+
